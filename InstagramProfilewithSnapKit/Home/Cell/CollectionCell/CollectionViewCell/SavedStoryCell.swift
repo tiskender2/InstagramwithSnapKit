@@ -9,5 +9,15 @@
 import UIKit
 
 class SavedStoryCell: UICollectionViewCell {
+    let stackView = UIStackView()
+    let imageView = UIImageView()
+    let label = UILabel()
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupSavedStoryCell()
+    }
     
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }

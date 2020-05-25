@@ -9,9 +9,6 @@
 import UIKit
 
 class ProfileCell: UITableViewCell {
-    var stackView = UIStackView()
-    var substackView = UIStackView()
-    var userInfoStackView = UIStackView()
     var userImage = UIImageView()
     var userPosts = UIButton()
     var userFollowers = UIButton()
@@ -19,10 +16,9 @@ class ProfileCell: UITableViewCell {
     var nameLabel = UILabel()
     var bioLabel = UILabel()
     var followerLabel = UILabel()
-    var profileType = profileEnum.othersProfile
+    var model : ProfileModel?
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupStacView()
     }
     
     required init?(coder: NSCoder) {

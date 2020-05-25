@@ -7,3 +7,16 @@
 //
 
 import Foundation
+import UIKit
+
+extension UIView {
+    func addBorder(borderWith:CGFloat,cornerRadius:CGFloat){
+        self.layer.borderWidth = borderWith
+        self.layer.cornerRadius = cornerRadius
+        if traitCollection.userInterfaceStyle == .dark {
+            self.layer.borderColor = UIColor.white.cgColor
+        } else {
+            self.layer.borderColor = UIColor.black.cgColor
+        }
+    }
+}

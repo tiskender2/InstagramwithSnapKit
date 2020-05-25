@@ -9,14 +9,13 @@
 import Foundation
 import UIKit
 import SnapKit
-enum profileEnum : Int {
-    case myProfile = 0
-    case othersProfile
-    case followingProfile
-}
+
 extension ProfileCell {
-    func setupStacView(){
+    func setupStackView(model:ProfileModel){
+        self.model = model
+        let stackView = UIStackView()
         self.selectionStyle = .none
+        contentView.subviews.forEach({ $0.removeFromSuperview() })
         contentView.addSubview(stackView)
         stackView.axis = .vertical
         stackView.alignment = .fill
@@ -25,9 +24,11 @@ extension ProfileCell {
         stackView.snp.makeConstraints { (make) in
             make.edges.equalTo(contentView).inset(10)
         }
-        setupSubStackView()
+        setupSubStackView(stackView:stackView)
     }
-    func setupSubStackView(){
+    fileprivate func setupSubStackView(stackView:UIStackView){
+        let substackView = UIStackView()
+        let userInfoStackView = UIStackView()
         substackView.axis = .horizontal
         substackView.alignment = .fill
         substackView.distribution = .fill
@@ -36,14 +37,14 @@ extension ProfileCell {
         stackView.addArrangedSubview(substackView)
         stackView.addArrangedSubview(addNameLabel())
         stackView.addArrangedSubview(addBioLabel())
-        if profileType != .myProfile {
+        if self.model?.profileType != .myProfile {
             stackView.addArrangedSubview(addFollowerLabel())
         }
-        stackView.addArrangedSubview(addView(titleImage: nil, isFollow: profileType))
+        stackView.addArrangedSubview(addView(titleImage: nil, isFollow: self.model?.profileType ?? profileEnum.myProfile ))
         
-        infoStackView()
+        infoStackView(userInfoStackView:userInfoStackView)
     }
-    func infoStackView(){
+    fileprivate func infoStackView(userInfoStackView:UIStackView){
         userInfoStackView.axis = .horizontal
         userInfoStackView.alignment = .fill
         userInfoStackView.distribution = .fillEqually
@@ -51,16 +52,16 @@ extension ProfileCell {
         userInfoStackView.addArrangedSubview(addFollowersView())
         userInfoStackView.addArrangedSubview(addFollowingView())
     }
-    func addImageView()->UIView{
+    fileprivate func addImageView()->UIView{
         let view = UIView()
-        userImage.image = UIImage(named: "profileIcon")
+        userImage.image = UIImage(named: model?.imageName ?? "")
         userImage.clipsToBounds = true
         view.addSubview(userImage)
         userImage.snp.makeConstraints { (make) in
             make.edges.equalTo(view).inset(8)
             make.size.width.height.equalTo(100)
         }
-        if profileType == .myProfile {
+        if model?.profileType == .myProfile {
             let button = UIButton()
             button.setImage(UIImage(named: "add"), for: .normal)
             view.addSubview(button)
@@ -73,50 +74,47 @@ extension ProfileCell {
         
         return view
     }
-    func addPostView()->UIView{
+    fileprivate func addPostView()->UIView{
         let view = UIView()
         view.addSubview(userPosts)
-        //userPosts.setTitle("2\nPosts", for: .normal)
         userPosts.titleLabel?.lineBreakMode = .byWordWrapping
         userPosts.titleLabel?.numberOfLines = 2
         userPosts.titleLabel?.textAlignment = .center
-        userPosts.addAttributes(title: "2", subTitle: "\nPosts")
+        userPosts.addAttributes(title: model?.postCount ?? "", subTitle: "\nPosts")
         userPosts.snp.makeConstraints { (make) in
            make.edges.equalTo(view)
         }
         return view
     }
-    func addFollowersView()->UIView{
+   fileprivate func addFollowersView()->UIView{
         let view = UIView()
-       // userFollowers.setTitle("100\nFollowers", for: .normal)
         userFollowers.titleLabel?.lineBreakMode = .byWordWrapping
         userFollowers.titleLabel?.numberOfLines = 2
         userFollowers.titleLabel?.textAlignment = .center
-        userFollowers.addAttributes(title: "100", subTitle: "\nFollowers")
+        userFollowers.addAttributes(title: model?.followerCount ?? "", subTitle: "\nFollowers")
         view.addSubview(userFollowers)
         userFollowers.snp.makeConstraints { (make) in
            make.edges.equalTo(view)
         }
         return view
     }
-    func addFollowingView()->UIView{
+    fileprivate func addFollowingView()->UIView{
         let view = UIView()
-       // userFollowing.setTitle("120\nFollowing", for: .normal)
         userFollowing.titleLabel?.lineBreakMode = .byWordWrapping
         userFollowing.titleLabel?.numberOfLines = 2
         userFollowing.titleLabel?.textAlignment = .center
-        userFollowing.addAttributes(title: "120", subTitle: "\nFollowing")
+        userFollowing.addAttributes(title: model?.followingCount ?? "", subTitle: "\nFollowing")
         view.addSubview(userFollowing)
         userFollowing.snp.makeConstraints { (make) in
             make.edges.equalTo(view)
         }
         return view
     }
-    func addNameLabel()->UIView{
+    fileprivate func addNameLabel()->UIView{
         let view = UIView()
         nameLabel.numberOfLines = 2
         nameLabel.font = UIFont.boldSystemFont(ofSize: 15)
-        nameLabel.text = "Tolga İskender"
+        nameLabel.text = model?.name
         view.addSubview(nameLabel)
         nameLabel.snp.makeConstraints { (make) in
             make.top.bottom.equalToSuperview()
@@ -124,11 +122,11 @@ extension ProfileCell {
         }
         return view
     }
-    func addBioLabel()->UIView{
+    fileprivate func addBioLabel()->UIView{
         let view = UIView()
         bioLabel.numberOfLines = 0
         bioLabel.font = UIFont(name: "HelveticaNeue-Light" , size: 15)
-        bioLabel.text = "IOS Developer\nToronto "
+        bioLabel.text = model?.bio
         view.addSubview(bioLabel)
         bioLabel.snp.makeConstraints { (make) in
             make.top.bottom.equalToSuperview()
@@ -136,7 +134,7 @@ extension ProfileCell {
         }
         return view
     }
-    func addFollowerLabel()->UIView{
+    fileprivate func addFollowerLabel()->UIView{
         let view = UIView()
         followerLabel.numberOfLines = 0
         followerLabel.addAttributes(text: "Followed by", mutualFollower1: " user1", mutualFollower2: " user2", otherMutuals: " 4 others")
@@ -147,14 +145,14 @@ extension ProfileCell {
         }
         return view
     }
-    func addView(titleImage:UIImage?,isFollow:profileEnum)->UIView{
+    fileprivate func addView(titleImage:UIImage?,isFollow:profileEnum)->UIView{
         let view = UIView()
         view.snp.makeConstraints { (make) in
             make.size.height.equalTo(50)
         }
         switch isFollow {
         case .followingProfile:
-           setupButtons(view: view, isFollow: isFollow)
+            setupButtons(view: view, isFollow: isFollow)
         case .othersProfile:
             setupButtons(view: view, isFollow: isFollow)
         case .myProfile:
@@ -163,48 +161,8 @@ extension ProfileCell {
         return view
     }
 }
-extension UIButton {
-    func addAttributes(title:String,subTitle:String){
-        let attrString = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 17) ]
-        let titleString = NSMutableAttributedString(string: title, attributes: attrString )
-        let myAttribute = [ NSAttributedString.Key.font: UIFont(name: "HelveticaNeue-Light" , size: 15)! ]
-        let subTitleString = NSMutableAttributedString(string: subTitle, attributes: myAttribute )
-        titleString.append(subTitleString)
-        self.setAttributedTitle(titleString, for: .normal)
-    }
-    
-}
-extension UILabel {
-    func addAttributes(text:String?,mutualFollower1:String?,mutualFollower2:String?,otherMutuals:String?){
-        let attrString = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 15)]
-        let mutualFollower1 = NSMutableAttributedString(string: mutualFollower1 ?? "", attributes: attrString )
-        let mutualFollower2 = NSMutableAttributedString(string: mutualFollower2 ?? "", attributes: attrString )
-        let otherMutuals = NSMutableAttributedString(string: otherMutuals ?? "", attributes: attrString )
-        let myAttribute = [ NSAttributedString.Key.font: UIFont(name: "HelveticaNeue-Light" , size: 15)! ]
-        let text = NSMutableAttributedString(string: text ?? "", attributes: myAttribute )
-        let comma = NSMutableAttributedString(string: ",", attributes: myAttribute )
-        let and = NSMutableAttributedString(string: " and", attributes: myAttribute )
-        text.append(mutualFollower1)
-        text.append(comma)
-        text.append(mutualFollower2)
-        text.append(and)
-        text.append(otherMutuals)
-        self.attributedText = text
-    }
-}
-extension UIView {
-    func addBorder(borderWith:CGFloat,cornerRadius:CGFloat){
-        self.layer.borderWidth = borderWith
-        self.layer.cornerRadius = cornerRadius
-        if traitCollection.userInterfaceStyle == .dark {
-            self.layer.borderColor = UIColor.white.cgColor
-        } else {
-            self.layer.borderColor = UIColor.black.cgColor
-        }
-    }
-}
 extension ProfileCell {
-    func setupButtons(view:UIView,isFollow:profileEnum){
+    fileprivate func setupButtons(view:UIView,isFollow:profileEnum){
         if isFollow == .myProfile {
             let button = UIButton()
             let subview = UIView()
