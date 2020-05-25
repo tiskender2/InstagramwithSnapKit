@@ -17,5 +17,4 @@ class HomeVC: UIViewController {
         super.viewDidLoad()
         setupUI()
     }
-    
 }
