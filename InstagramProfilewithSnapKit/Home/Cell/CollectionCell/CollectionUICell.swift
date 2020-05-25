@@ -22,6 +22,11 @@ extension CollectionCell {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.showsHorizontalScrollIndicator = false
+        if traitCollection.userInterfaceStyle == .dark {
+            collectionView.backgroundColor = .black
+        } else {
+            collectionView.backgroundColor = .white
+        }
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
         collectionView.register(SavedStoryCell.self, forCellWithReuseIdentifier: "SavedStoryCell")
         contentView.addSubview(collectionView)

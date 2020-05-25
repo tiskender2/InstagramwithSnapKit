@@ -170,6 +170,11 @@ extension ProfileCell {
             subview.layer.cornerRadius = 4
             subview.addBorder(borderWith: 0.1,cornerRadius: 4)
             button.setTitle("Edit Profile", for: .normal)
+            if traitCollection.userInterfaceStyle == .dark {
+               button.setTitleColor(.white, for: .normal)
+            } else {
+              button.setTitleColor(.black, for: .normal)
+            }
             button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
             subview.addSubview(button)
             view.addSubview(subview)
@@ -199,6 +204,11 @@ extension ProfileCell {
         followView.addSubview(button)
         if isFollow == .followingProfile {
             button.setTitle("Following", for: .normal)
+            if traitCollection.userInterfaceStyle == .dark {
+                button.setTitleColor(.white, for: .normal)
+            } else {
+                button.setTitleColor(.black, for: .normal)
+            }
             let imageView = UIImageView()
             imageView.image = UIImage(named: "down-arrow")
             if traitCollection.userInterfaceStyle == .dark {
@@ -229,6 +239,11 @@ extension ProfileCell {
         stackView.addArrangedSubview(messageView)
         let messageButton = UIButton()
         messageButton.setTitle("Message", for: .normal)
+        if traitCollection.userInterfaceStyle == .dark {
+            messageButton.setTitleColor(.white, for: .normal)
+        } else {
+            messageButton.setTitleColor(.black, for: .normal)
+        }
         messageButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
         messageView.addSubview(messageButton)
         messageButton.snp.makeConstraints { (make) in
