@@ -28,7 +28,7 @@ extension HomeVC {
         preferences.animating.showInitialAlpha = 0
         preferences.animating.showDuration = 1
         preferences.animating.dismissDuration = 1
-        self.easyTipView = EasyTipView(text: "Tap to here to change Profile",
+        self.easyTipView = EasyTipView(text: "Tap here to change Profile",
                                        preferences: preferences)
         self.easyTipView.show(animated: true, forView: self.navigationController!.navigationBar, withinSuperview: self.navigationController?.view)
     }
