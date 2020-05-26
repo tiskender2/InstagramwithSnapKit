@@ -161,11 +161,11 @@ extension HomeVC {
     @objc func changeUserType(){
         self.easyTipView.dismiss()
         var actions: [(String, UIAlertAction.Style)] = []
-        actions.append(("My Profile", UIAlertAction.Style.default))
-        actions.append(("Following Profile", UIAlertAction.Style.default))
-        actions.append(("Other Profile", UIAlertAction.Style.default))
-        actions.append(("Cancel", UIAlertAction.Style.cancel))
-        AlertManager.showActionsheet(viewController: self, title: "Choose Profile", message: "You can change to view to see Profile Types", actions: actions) { (index) in
+        actions.append(("My Profile", .default))
+        actions.append(("Following Profile", .default))
+        actions.append(("Other Profile", .default))
+        actions.append(("Cancel", .cancel))
+        AlertManager.showActionsheet(viewController: self, title: "Choose Profile", message: "You can change the view to see Profile Types", actions: actions) { (index) in
             switch index {
             case profileEnum.myProfile.rawValue:
                 self.setUser(profile: .myProfile, imageName: "profileIcon", postCount: "2", followerCount: "100", followingCount: "54", name: "Tolga İskender", username: "tiskender2", bio: "iOS Developer\nToronto")
