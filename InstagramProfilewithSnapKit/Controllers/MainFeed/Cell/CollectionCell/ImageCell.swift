@@ -1,20 +1,20 @@
 //
-//  SavedStoryCell.swift
+//  ImageCell.swift
 //  InstagramProfilewithSnapKit
 //
-//  Created by Tolga İskender on 25.05.2020.
+//  Created by Tolga İskender on 31.05.2020.
 //  Copyright © 2020 Tolga İskender. All rights reserved.
 //
 
 import UIKit
 
-class SavedStoryCell: UICollectionViewCell {
-    let stackView = UIStackView()
-    let imageView = UIImageView()
-    let label = UILabel()
+class ImageCell: UICollectionViewCell {
+    var postImage = UIImageView()
+    static let identifier = "ImageCell"
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupSavedStoryCell()
+        setupImageCell()
     }
     
     required init?(coder aDecoder: NSCoder) {

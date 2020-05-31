@@ -27,7 +27,7 @@ extension CollectionCell {
         } else {
             collectionView.backgroundColor = .white
         }
-        collectionView.contentInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
+        collectionView.contentInset = UIEdgeInsets(top: 20, left: 10, bottom: 0, right: 0)
         collectionView.register(SavedStoryCell.self, forCellWithReuseIdentifier: "SavedStoryCell")
         contentView.addSubview(collectionView)
         collectionView.snp.makeConstraints { (make) in
@@ -45,7 +45,9 @@ extension CollectionCell : UICollectionViewDataSource {
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SavedStoryCell", for: indexPath) as! SavedStoryCell
-        if indexPath.item == CellType.new.rawValue && self.model?.profileType == .myProfile {
+        if userArray != nil {
+            cell.customizeFeedStory(image: UIImage(named: userArray?[indexPath.item].imageName ?? "") ?? UIImage(), text: userArray?[indexPath.item].username ?? "")
+        }else if indexPath.item == CellType.new.rawValue && self.model?.profileType == .myProfile {
             cell.customizeNewSavedStoryCell(image: UIImage(named: "plus") ?? UIImage(), text: "New")
         }else {
             cell.customizeSavedStoryCell(image: UIImage(named: "raptors") ?? UIImage(), text: "savedStory")
@@ -57,7 +59,7 @@ extension CollectionCell : UICollectionViewDataSource {
     }
     override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
             collectionView.layoutIfNeeded()
-            collectionView.frame = CGRect(x: 0, y: 0, width: targetSize.width , height: 120)
+            collectionView.frame = CGRect(x: 0, y: 0, width: targetSize.width , height: 140)
             return collectionView.collectionViewLayout.collectionViewContentSize
     }
 }

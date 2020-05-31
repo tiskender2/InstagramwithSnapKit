@@ -26,4 +26,19 @@ extension UILabel {
         text.append(otherMutuals)
         self.attributedText = text
     }
+    func addDetailAttributes(username:String,text:String){
+        let attrString = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 15)]
+        let myAttribute = [ NSAttributedString.Key.font: UIFont(name: "HelveticaNeue-Light" , size: 15)! ]
+        let username = NSMutableAttributedString(string: username, attributes: attrString)
+        let text = NSMutableAttributedString(string: text , attributes: myAttribute)
+        username.append(text)
+        self.attributedText = username
+    }
+    func addCommentAttributes(text:String,textSize:CGFloat){
+        let myAttribute = [ NSAttributedString.Key.font: UIFont(name: "HelveticaNeue-Light" , size: textSize)! ]
+        let text = NSMutableAttributedString(string: text , attributes: myAttribute)
+        self.textColor = .darkGray
+        self.alpha = 0.6
+        self.attributedText = text
+    }
 }

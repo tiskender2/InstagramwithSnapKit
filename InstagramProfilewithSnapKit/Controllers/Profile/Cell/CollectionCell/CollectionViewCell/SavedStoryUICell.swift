@@ -21,8 +21,6 @@ extension SavedStoryCell {
         stackView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
-        
-        let viewImage = UIView()
         viewImage.addBorder(borderWith: 0.1, cornerRadius: (contentView.frame.size.width)/2)
         stackView.addArrangedSubview(viewImage)
         
@@ -65,5 +63,33 @@ extension SavedStoryCell {
         imageView.contentMode = .scaleAspectFill
         imageView.image = image
         label.text = text
+    }
+    func customizeFeedStory(image:UIImage,text:String){
+        imageView.image = image
+        imageView.contentMode = .scaleAspectFit
+        label.text = text
+        viewImage.clipsToBounds = true
+       
+        if text == "tiskender2"{
+            label.addCommentAttributes(text: text, textSize: 13)
+            let view = UIView()
+            contentView.addSubview(view)
+            view.snp.makeConstraints { (make) in
+                make.top.left.equalToSuperview()
+                make.width.height.equalTo(viewImage)
+            }
+            let button = UIButton()
+            button.setImage(UIImage(named: "add"), for: .normal)
+            view.addSubview(button)
+            button.snp.makeConstraints { (make) in
+                make.width.height.equalTo(20)
+                make.trailing.equalTo(view.snp.trailing).inset(2)
+                make.bottom.equalTo(view.snp.bottom).inset(2)
+            }
+        } else {
+            label.font = UIFont(name: "HelveticaNeue-Light" , size: 13)!
+            viewImage.setGradientBorder(width: 5, colors: [.orange, .purple, .red], cornerRadius: viewImage.frame.size.width/2)
+        }
+       // viewImage.applyGradient(isVertical: false, colorArray: [.orange, .purple, .red]
     }
 }

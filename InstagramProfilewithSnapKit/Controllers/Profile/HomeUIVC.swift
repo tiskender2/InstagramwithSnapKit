@@ -17,7 +17,7 @@ extension HomeVC {
     func setupUI()  {
         showTip()
         setUser(profile: .myProfile, imageName: "profileIcon", postCount: "2", followerCount: "100", followingCount: "54", name: "Tolga İskender", username: "tiskender2", bio: "iOS Developer\nToronto")
-        setupNavBar(title: model.username ?? "tiskender2", imageName: "down-arrow", lockImageName: "lock", rightButton: "menu")
+        
         setupTableView()
     }
     fileprivate func showTip(){
@@ -32,10 +32,10 @@ extension HomeVC {
                                        preferences: preferences)
         self.easyTipView.show(animated: true, forView: self.navigationController!.navigationBar, withinSuperview: self.navigationController?.view)
     }
-    fileprivate func setupNavBar(title:String,imageName:String?,lockImageName:String?,rightButton:String){
+    func setupNavBar(title:String,imageName:String?,lockImageName:String?,rightButton:String){
         
         setupNavTitle(title: model.username ?? "tiskender2", imageName: imageName, lockImageName:lockImageName)
-        navigationController?.navigationBar.isTranslucent = false
+        tabBarController?.navigationController?.navigationBar.isTranslucent = false
         let button = UIButton(type: .custom)
         let origImage = UIImage(named: rightButton)!
         let tintedImage = origImage.withRenderingMode(.alwaysTemplate)
@@ -48,8 +48,9 @@ extension HomeVC {
         } else {
             button.tintColor = .black
         }
-        navigationItem.rightBarButtonItem = barButton
-        navigationItem.leftBarButtonItems = nil
+        tabBarController?.navigationItem.rightBarButtonItems = nil
+        tabBarController?.navigationItem.rightBarButtonItem = barButton
+        tabBarController?.navigationItem.leftBarButtonItems = nil
         if model.profileType != .myProfile{
             let button = UIButton(type: .custom)
             button.setImage(UIImage(named: "back"), for: .normal)
@@ -61,7 +62,7 @@ extension HomeVC {
             }
             button.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
             let barButton = UIBarButtonItem(customView: button)
-            navigationItem.leftBarButtonItem = barButton
+            tabBarController?.navigationItem.leftBarButtonItem = barButton
         }
         
     }
@@ -128,7 +129,7 @@ extension HomeVC {
         stackView.addArrangedSubview(privateView)
         stackView.addArrangedSubview(userNameView)
         stackView.addArrangedSubview(downView)
-        navigationItem.titleView = stackView
+        tabBarController?.navigationItem.titleView = stackView
         stackView.snp.makeConstraints { (make) in
             //make.width.equalTo(250)
             make.height.equalTo(30)

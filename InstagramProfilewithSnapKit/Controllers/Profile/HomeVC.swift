@@ -17,4 +17,8 @@ class HomeVC: UIViewController {
         super.viewDidLoad()
         setupUI()
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupNavBar(title: model.username ?? "tiskender2", imageName: "down-arrow", lockImageName: "lock", rightButton: "menu")
+    }
 }

@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     func setupVC(){
-        let homeVC = HomeVC()
+        let homeVC = MainVC()
         let navController = UINavigationController(rootViewController: homeVC)
         self.window = UIWindow(frame: UIScreen.main.bounds)
         self.window?.rootViewController = navController

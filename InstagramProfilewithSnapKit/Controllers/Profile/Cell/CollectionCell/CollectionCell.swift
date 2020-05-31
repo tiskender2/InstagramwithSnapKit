@@ -11,6 +11,7 @@ import UIKit
 class CollectionCell: UITableViewCell {
     let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout.init())
     var model : ProfileModel?
+    var userArray : [ProfileModel]?
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupCollectionCell(model: model ?? ProfileModel())
