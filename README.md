@@ -1,2 +1,2 @@
-# InstagramProfilewithSnapKit
+# InstagramewithSnapKit
 Instagram with **SnapKit**
