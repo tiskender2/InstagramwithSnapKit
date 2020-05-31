@@ -69,9 +69,9 @@ extension SavedStoryCell {
         imageView.contentMode = .scaleAspectFit
         label.text = text
         viewImage.clipsToBounds = true
-       
+        
         if text == "tiskender2"{
-            label.addCommentAttributes(text: text, textSize: 13)
+            label.addCommentAttributes(text: "Your Story", textSize: 13)
             let view = UIView()
             contentView.addSubview(view)
             view.snp.makeConstraints { (make) in
