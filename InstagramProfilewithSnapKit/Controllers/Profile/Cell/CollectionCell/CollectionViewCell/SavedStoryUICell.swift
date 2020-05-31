@@ -28,6 +28,21 @@ extension SavedStoryCell {
         imageView.clipsToBounds = true
         imageView.image = UIImage(named: "raptors")
         viewImage.addSubview(imageView)
+        
+        contentView.addSubview(buttonView)
+        buttonView.isHidden = true
+        buttonView.snp.makeConstraints { (make) in
+            make.top.left.equalToSuperview()
+            make.width.height.equalTo(viewImage)
+        }
+        let button = UIButton()
+        button.setImage(UIImage(named: "add"), for: .normal)
+        buttonView.addSubview(button)
+        button.snp.makeConstraints { (make) in
+            make.width.height.equalTo(20)
+            make.trailing.equalTo(buttonView.snp.trailing).inset(2)
+            make.bottom.equalTo(buttonView.snp.bottom).inset(2)
+        }
         viewImage.snp.makeConstraints { (make) in
             make.width.height.equalTo(70)
         }
@@ -72,22 +87,13 @@ extension SavedStoryCell {
         
         if text == "tiskender2"{
             label.addCommentAttributes(text: "Your Story", textSize: 13)
-            let view = UIView()
-            contentView.addSubview(view)
-            view.snp.makeConstraints { (make) in
-                make.top.left.equalToSuperview()
-                make.width.height.equalTo(viewImage)
-            }
-            let button = UIButton()
-            button.setImage(UIImage(named: "add"), for: .normal)
-            view.addSubview(button)
-            button.snp.makeConstraints { (make) in
-                make.width.height.equalTo(20)
-                make.trailing.equalTo(view.snp.trailing).inset(2)
-                make.bottom.equalTo(view.snp.bottom).inset(2)
-            }
+           buttonView.isHidden = false
         } else {
+            buttonView.isHidden = true
             label.font = UIFont(name: "HelveticaNeue-Light" , size: 13)!
+            self.viewImage.layer.sublayers = self.viewImage.layer.sublayers?.filter { theLayer in
+                  !theLayer.isKind(of: CAGradientLayer.classForCoder())
+            }
             viewImage.setGradientBorder(width: 5, colors: [.orange, .purple, .red], cornerRadius: viewImage.frame.size.width/2)
         }
        // viewImage.applyGradient(isVertical: false, colorArray: [.orange, .purple, .red]

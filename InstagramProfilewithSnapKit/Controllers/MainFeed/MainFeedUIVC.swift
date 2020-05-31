@@ -91,7 +91,7 @@ extension MainFeedVC : UITableViewDataSource {
         if indexPath.row == MaincellType.storyCell.rawValue {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CollectionCell", for: indexPath) as! CollectionCell
             cell.userArray = userArray
-            cell.collectionReloadData(model: ProfileModel(profileType: .myProfile))
+            //cell.collectionReloadData(model: ProfileModel(profileType: .myProfile))
             return cell
         } else /*if indexPath.row == MaincellType.feedCell.rawValue */{
             let cell = tableView.dequeueReusableCell(withIdentifier: FeedCell.identifier, for: indexPath) as! FeedCell

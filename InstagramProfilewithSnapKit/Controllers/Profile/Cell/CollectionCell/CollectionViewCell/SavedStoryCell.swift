@@ -13,7 +13,7 @@ class SavedStoryCell: UICollectionViewCell {
     let imageView = UIImageView()
     let label = UILabel()
     let viewImage = UIView(frame: CGRect(x: 0, y: 0, width: 70.0, height: 70.0))
-    var once = true
+    let buttonView = UIView()
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupSavedStoryCell()
