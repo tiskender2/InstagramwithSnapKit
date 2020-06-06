@@ -10,6 +10,11 @@ import Foundation
 import UIKit
 
 extension UIView {
+    func addSubViews(views:[UIView]){
+        views.forEach { (view) in
+            self.addSubview(view)
+        }
+    }
     func addBorder(borderWith:CGFloat,cornerRadius:CGFloat){
         self.layer.borderWidth = borderWith
         self.layer.cornerRadius = cornerRadius

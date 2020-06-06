@@ -24,6 +24,7 @@ extension MainFeedVC {
         tableView.tableFooterView = UIView(frame: .zero)
         tableView.register(FeedCell.self, forCellReuseIdentifier: FeedCell.identifier)
         tableView.register(CollectionCell.self, forCellReuseIdentifier: "CollectionCell")
+        tableView.register(SuggestedCell.self, forCellReuseIdentifier: SuggestedCell.identifier)
         view.addSubview(tableView)
         tableView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
@@ -91,7 +92,10 @@ extension MainFeedVC : UITableViewDataSource {
         if indexPath.row == MaincellType.storyCell.rawValue {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CollectionCell", for: indexPath) as! CollectionCell
             cell.userArray = userArray
-            //cell.collectionReloadData(model: ProfileModel(profileType: .myProfile))
+            return cell
+        } else if indexPath.row == MaincellType.suggestCell.rawValue {
+            let cell = tableView.dequeueReusableCell(withIdentifier: SuggestedCell.identifier, for: indexPath) as! SuggestedCell
+            cell.userArray = userArray
             return cell
         } else /*if indexPath.row == MaincellType.feedCell.rawValue */{
             let cell = tableView.dequeueReusableCell(withIdentifier: FeedCell.identifier, for: indexPath) as! FeedCell
